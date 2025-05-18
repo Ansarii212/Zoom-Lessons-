@@ -13,7 +13,7 @@
     color: #555;
   }
   .filters {
-    display: flex;
+    display: none;
     gap: 10px;
     justify-content: center;
     margin-bottom: 25px;
@@ -30,7 +30,7 @@
     padding: 6px 14px;
     background: #d9534f;
     border: none;
-    color: white;
+    color: yellow;
     font-weight: bold;
     border-radius: 8px;
     cursor: pointer;
@@ -100,8 +100,8 @@
     font-weight: bold;
     cursor: pointer;
     position: absolute;
-    top: 20px;
-    right: 20px;
+    bottom: 20px;
+    left: 20px;
     transition: background-color 0.4s ease;
   }
   .subscribe-btn.hide {
@@ -179,7 +179,7 @@
 </style>
 </head>
 <body>
-
+<header> كورساتي</header>
 <div class="filters">
   <select id="filter-stage">
     <option value="">المرحلة</option>
