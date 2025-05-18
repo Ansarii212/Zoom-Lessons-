@@ -12,33 +12,68 @@
     padding: 20px;
     color: #555;
   }
-  .filters {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin-bottom: 25px;
-    flex-wrap: wrap;
-  }
-  .filters select, .filters input[type="date"] {
-    padding: 5px 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 14px;
-    min-width: 130px;
-  }
-  .filters button {
-    padding: 6px 14px;
-    background: #d9534f;
-    border: none;
-    color: yellow;
-    font-weight: bold;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
-  .filters button:hover {
-    background: #c9302c;
-  }
+      .site-title {
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  display: block;
+  margin: 0 auto;
+}
+
+    .nav-buttons {
+      
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    
+    }
+
+    .nav-buttons a {
+      background-color: #ffc107;
+      color: #000;
+      padding: 10px 20px;
+      margin: 10px 10px;
+      border: none;
+      text-decoration: none;
+      font-size: 10px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .nav-buttons a:hover {
+      background-color: #e0a800;
+    }
+
+    .separator {
+      color: black;
+      font-size: 18px;
+      margin: 0 5px;
+      user-select: none;
+    }
+
+.filters {
+  display: flex;
+  justify-content: center; /* علشان تكون في المنتصف */
+  gap: 10px;               /* مسافات بين الأزرار */
+  flex-wrap: wrap;         /* تخليها تلف لو الشاشة ضيقة */
+  margin: 20px 0;
+}
+
+.filters button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  colore: black ;
+  font-size: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.filters button:hover {
+  background-color: #e0a800;
+}
   #cards-container {
     max-width: 700px;
     margin: 0 auto;
@@ -179,7 +214,18 @@
 </style>
 </head>
 <body>
-
+    <header>
+    <div class="site-title">كورساتي</div>
+    <div class="nav-buttons">
+      <a href="#">الرئيسية</a>
+      <span class="separator">|</span>
+      <a href="#">الدورات</a>
+      <span class="separator">|</span>
+      <a href="#">اتصل بنا</a>
+    </div>
+      
+      
+  </header>
 <div class="filters">
   <select id="filter-stage">
     <option value="">المرحلة</option>
