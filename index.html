@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>نماذج الدورات بفلاتر واشتراك متحرك</title>
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+    direction: rtl;
+    background: #f9f9f9;
+    padding: 20px;
+    color: #555;
+  }
+  .filters {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+  }
+  .filters select, .filters input[type="date"] {
+    padding: 5px 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    min-width: 130px;
+  }
+  .filters button {
+    padding: 6px 14px;
+    background: #d9534f;
+    border: none;
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  .filters button:hover {
+    background: #c9302c;
+  }
+  #cards-container {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .card {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 20px 20px 60px 20px;
+    margin-bottom: 40px;
+    position: relative;
+  }
+  .top-line {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .top-line img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-left: 10px;
+  }
+  .teacher-name {
+    font-weight: bold;
+    flex: 1;
+  }
+  .rating {
+    font-size: 18px;
+    color: gold;
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    user-select: none;
+  }
+  .course-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #007bff;
+    margin-bottom: 5px;
+  }
+  .description {
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
+  .info {
+    margin-bottom: 6px;
+    font-size: 14px;
+  }
+  .duration {
+    margin-bottom: 10px;
+  }
+  .subscribe-btn {
+    background: #28a745;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    transition: background-color 0.4s ease;
+  }
+  .subscribe-btn.hide {
+    background-color: #d9534f;
+  }
+  .register-form {
+    background: #f1f1f1;
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 20px;
+    display: none;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .register-form.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .register-form h3 {
+    text-align: right;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  .form-group {
+    margin-bottom: 12px;
+  }
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  .form-group input, .form-group select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+  }
+  .form-group input[readonly] {
+    background-color: #ddd;
+    cursor: not-allowed;
+  }
+  .copy-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .copy-btn {
+    padding: 6px 12px;
+    background: gray;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .bottom-buttons {
+    margin-top: 15px;
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+  }
+  .bottom-buttons button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .send-btn {
+    background-color: #007bff;
+    color: white;
+  }
+</style>
+</head>
+<body>
+
+<div class="filters">
+  <select id="filter-stage">
+    <option value="">المرحلة</option>
+    <option value="ابتدائي">ابتدائي</option>
+    <option value="متوسط">متوسط</option>
+    <option value="ثانوي">ثانوي</option>
+  </select>
+
+  <select id="filter-grade" disabled>
+    <option value="">الصف</option>
+  </select>
+
+  <select id="filter-teacher">
+    <option value="">المعلم</option>
+    <option value="أ. محمد">أ. محمد</option>
+    <option value="أ. سارة">أ. سارة</option>
+    <option value="أ. أحمد">أ. أحمد</option>
+  </select>
+
+  <input type="date" id="filter-date" />
+
+  <button id="reset-filters">إعادة التعيين</button>
+</div>
+
+<div id="cards-container">
+
+  <!-- بطاقة دورة 1 -->
+  <div class="card" data-stage="متوسط" data-grade="الصف الأول" data-teacher="أ. محمد" data-date="2025-05-20">
+    <div class="rating">⭐⭐⭐⭐</div>
+    <div class="top-line">
+      <img src="https://cdn-icons-png.flaticon.com/512/147/147144.png" alt="teacher" />
+      <div class="teacher-name">أ. محمد</div>
+    </div>
+    <div class="course-title">كورس القواعد</div>
+    <div class="description">معلم خبير في تدريس القواعد للمرحلة المتوسطة.</div>
+    <div class="info">المرحلة: متوسط</div>
+    <div class="info">الصف: الصف الأول</div>
+    <div class="info">تاريخ الدورة: 2025-05-20</div>
+    <div class="duration">المدة: 2 ساعة</div>
+    <button class="subscribe-btn" data-form="form1">اشترك الآن</button>
+
+    <div class="register-form" id="form1">
+      <h3>تسجيل طالب - كورس القواعد</h3>
+      <div class="form-group">
+        <label>المرحلة</label>
+        <input type="text" value="متوسط" readonly />
+      </div>
+      <div class="form-group">
+        <label>الصف</label>
+        <input type="text" value="الصف الأول" readonly />
+      </div>
+      <div class="form-group">
+        <label>اسم الطالب رباعي</label>
+        <input type="text" />
+      </div>
+      <div class="form-group">
+        <label>رقم الواتساب للتواصل</label>
+        <input type="text" />
+      </div>
+      <div class="form-group">
+        <label>انسخ رقم الحساب</label>
+        <div class="copy-section">
+          <span>SA1234567890</span>
+          <button class="copy-btn" onclick="copyAccount(this)">نسخ</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>ارفع صورة الإيصال</label>
+        <input type="file" />
+      </div>
+      <div class="bottom-buttons">
+        <button class="send-btn">إرسال</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- بطاقة دورة 2 -->
+  <div class="card" data-stage="ابتدائي" data-grade="الصف الثالث" data-teacher="أ. سارة" data-date="2025-05-22">
+    <div class="rating">⭐⭐⭐⭐⭐</div>
+    <div class="top-line">
+      <img src="https://cdn-icons-png.flaticon.com/512/194/194938.png" alt="teacher" />
+      <div class="teacher-name">أ. سارة</div>
+    </div>
+    <div class="course-title">كورس الرياضيات</div>
+    <div class="description">تعليم مميز للرياضيات للمرحلة الابتدائية.</div>
+    <div class="info">المرحلة: ابتدائي</div>
+    <div class="info">الصف: الصف الثالث</div>
+    <div class="info">تاريخ الدورة: 2025-05-22</div>
+    <div class="duration">المدة: 3 ساعات</div>
+    <button class="subscribe-btn" data-form="form2">اشترك الآن</button>
+
+    <div class="register-form" id="form2">
+      <h3>تسجيل طالب - كورس الرياضيات</h3>
+      <div class="form-group">
+        <label>المرحلة</label>
+        <input type="text" value="ابتدائي" readonly />
+      </div>
+      <div class="form-group">
+        <label>الصف</label>
+        <input type="text" value="الصف الثالث" readonly />
+      </div>
+      <div class="form-group">
+        <label>اسم الطالب رباعي</label>
+        <input type="text" />
+      </div>
+      <div class="form-group">
+        <label>رقم الواتساب للتواصل</label>
+        <input type="text" />
+      </div>
+      <div class="form-group">
+        <label>انسخ رقم الحساب</label>
+        <div class="copy-section">
+          <span>SA1234567890</span>
+          <button class="copy-btn" onclick="copyAccount(this)">نسخ</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>ارفع صورة الإيصال</label>
+        <input type="file" />
+      </div>
+      <div class="bottom-buttons">
+        <button class="send-btn">إرسال</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- بطاقة دورة 3 -->
+  <div class="card" data-stage="ثانوي" data-grade="الصف الثالث" data-teacher="أ. أحمد" data-date="2025-06-10">
+    <div class="rating">⭐⭐⭐⭐</div>
+    <div class="top-line">
+      <img src="https://cdn-icons-png.flaticon.com/512/147/147144.png" alt="teacher" />
+      <div class="teacher-name">أ. أحمد</div>
+    </div>
+    <div class="course-title">كورس الفيزياء</div>
+    <div class="description">شرح مبسط للفيزياء للمرحلة الثانوية.</div>
+    <div class="info">المرحلة: ثانوي</div>
+    <div class="info">الصف: الصف الثالث</div>
+    <div class="info">تاريخ الدورة: 2025-06-10</div>
+    <div class="duration">المدة: 4 ساعات</div>
+    <button class="subscribe-btn" data-form="form3">اشترك الآن</button>
+
+    <div class="register-form" id="form3">
+      <h3>تسجيل طالب - كورس الفيزياء</h3>
+      <div class="form-group">
+        <label>المرحلة</label>
+        <input type="text" value="ثانوي" readonly />
+      </div>
+      <div class="form-group">
+        <label>الصف</label>
+        <input type="text" value="الصف الثالث" readonly />
+      </div>
+      <div class="form-group">
+        <label>اسم الطالب رباعي</label>
+        <input type="text" />
+      </div>
+      <div class="form-group">
+        <label>رقم الواتساب للتواصل</label>
+        <input type="text" />
+      </div>
+      <div class="form-group">
+        <label>انسخ رقم الحساب</label>
+        <div class="copy-section">
+          <span>SA1234567890</span>
+          <button class="copy-btn" onclick="copyAccount(this)">نسخ</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>ارفع صورة الإيصال</label>
+        <input type="file" />
+      </div>
+      <div class="bottom-buttons">
+        <button class="send-btn">إرسال</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // تحديث خيارات الصف حسب المرحلة
+  const stageFilter = document.getElementById('filter-stage');
+  const gradeFilter = document.getElementById('filter-grade');
+  const teacherFilter = document.getElementById('filter-teacher');
+  const dateFilter = document.getElementById('filter-date');
+  const resetBtn = document.getElementById('reset-filters');
+  const cardsContainer = document.getElementById('cards-container');
+  const subscribeButtons = document.querySelectorAll('.subscribe-btn');
+
+  function setGradeOptions(stage) {
+    gradeFilter.innerHTML = '<option value="">الصف</option>';
+    gradeFilter.disabled = !stage;
+    if (!stage) return;
+    let grades = [];
+    if(stage === 'ابتدائي'){
+      grades = ['الصف الأول', 'الصف الثاني', 'الصف الثالث', 'الصف الرابع', 'الصف الخامس', 'الصف السادس'];
+    } else if(stage === 'متوسط' || stage === 'ثانوي'){
+      grades = ['الصف الأول', 'الصف الثاني', 'الصف الثالث'];
+    }
+    grades.forEach(g => {
+      let opt = document.createElement('option');
+      opt.value = g;
+      opt.textContent = g;
+      gradeFilter.appendChild(opt);
+    });
+  }
+
+  stageFilter.addEventListener('change', () => {
+    setGradeOptions(stageFilter.value);
+    filterCards();
+  });
+
+  gradeFilter.addEventListener('change', filterCards);
+  teacherFilter.addEventListener('change', filterCards);
+  dateFilter.addEventListener('change', filterCards);
+
+  resetBtn.addEventListener('click', () => {
+    stageFilter.value = '';
+    gradeFilter.innerHTML = '<option value="">الصف</option>';
+    gradeFilter.disabled = true;
+    teacherFilter.value = '';
+    dateFilter.value = '';
+    filterCards();
+  });
+
+  function filterCards() {
+    const stage = stageFilter.value;
+    const grade = gradeFilter.value;
+    const teacher = teacherFilter.value;
+    const date = dateFilter.value;
+    const cards = cardsContainer.querySelectorAll('.card');
+    cards.forEach(card => {
+      let show = true;
+      if(stage && card.dataset.stage !== stage) show = false;
+      if(grade && card.dataset.grade !== grade) show = false;
+      if(teacher && card.dataset.teacher !== teacher) show = false;
+      if(date && card.dataset.date !== date) show = false;
+      card.style.display = show ? 'block' : 'none';
+    });
+  }
+
+  // زر الاشتراك - إظهار النموذج مع أنيميشن ونقل الصفحة إليه
+  subscribeButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const formId = btn.dataset.form;
+      const form = document.getElementById(formId);
+      if(form.classList.contains('show')) {
+        // إخفاء النموذج وإعادة الزر
+        form.classList.remove('show');
+        btn.textContent = 'اشترك الآن';
+        btn.classList.remove('hide');
+      } else {
+        // إخفاء كل النماذج الأخرى أولاً
+        document.querySelectorAll('.register-form.show').forEach(f => f.classList.remove('show'));
+        // إعادة كل الأزرار لنص الاشتراك
+        subscribeButtons.forEach(b => {
+          b.textContent = 'اشترك الآن';
+          b.classList.remove('hide');
+        });
+
+        form.classList.add('show');
+        btn.textContent = 'إخفاء';
+        btn.classList.add('hide');
+
+        // نزول الصفحة بسلاسة لنموذج التسجيل
+        form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    });
+  });
+
+  // نسخ رقم الحساب
+  function copyAccount(btn){
+    const text = btn.previousElementSibling.textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'تم النسخ';
+      setTimeout(() => btn.textContent = 'نسخ', 1500);
+    });
+  }
+
+</script>
+
+</body>
+</html>
