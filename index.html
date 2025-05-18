@@ -245,14 +245,6 @@
     <option value="أ. أحمد">أ. أحمد</option>
   </select>
   
-    <select id="ratingFilter">
-      <option value="">التقييم</option>
-      <option value="1">نجمة واحدة</option>
-      <option value="2">نجمتان</option>
-      <option value="3">3 نجوم</option>
-      <option value="4">4 نجوم</option>
-      <option value="5">5 نجوم</option>
-    </select>
   <input type="date" id="filter-date" />
 
   <button id="reset-filters">إعادة التعيين</button>
@@ -416,7 +408,6 @@
   const stageFilter = document.getElementById('filter-stage');
   const gradeFilter = document.getElementById('filter-grade');
   const teacherFilter = document.getElementById('filter-teacher');
-  const teacherFilter = document.getElementById('ratingFilter');
   const dateFilter = document.getElementById('filter-date');
   const resetBtn = document.getElementById('reset-filters');
   const cardsContainer = document.getElementById('cards-container');
@@ -447,14 +438,11 @@
 
   gradeFilter.addEventListener('change', filterCards);
   teacherFilter.addEventListener('change', filterCards);
-  ratingFilter.addEventListener('change', filterCards);
   dateFilter.addEventListener('change', filterCards);
-
   resetBtn.addEventListener('click', () => {
     stageFilter.value = '';
     gradeFilter.innerHTML = '<option value="">الصف</option>';
     gradeFilter.disabled = true;
-    ratingFilter.value = '';
     teacherFilter.value = '';
     dateFilter.value = '';
     filterCards();
@@ -464,7 +452,6 @@
     const stage = stageFilter.value;
     const grade = gradeFilter.value;
     const teacher = teacherFilter.value;
-    const teacher = ratingFilter.value;
     const date = dateFilter.value;
     const cards = cardsContainer.querySelectorAll('.card');
     cards.forEach(card => {
