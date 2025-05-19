@@ -1,132 +1,432 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>نموذج التسجيل</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>نماذج الدورات بفلاتر واشتراك متحرك</title>
   <style>
     body {
-      background: #f7f0e8;
-      font-family: 'Cairo', sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      margin: 0;
+      font-family: 'Arial', sans-serif;
+      direction: rtl;
+      background: #f9f9f9;
+      padding: 20px;
+      color: #555;
     }
-
-    .container {
-      background: white;
-      padding: 40px 30px;
-      border-radius: 20px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.2);
-      width: 95%;
-      max-width: 500px;
-      text-align: center;
+    .site-title {
+      font-size: 30px; font-weight: bold;
+      text-align: center; margin-bottom: 10px;
     }
-
-    h1 {
-      margin-top: 0;
-      color: #6d4c41;
-      font-size: 28px;
+    .nav-buttons {
+      display: flex; justify-content: center; align-items: center;
+      gap: 10px; flex-wrap: wrap; margin-bottom: 20px;
     }
-
-    .description {
-      color: #444;
-      margin-bottom: 25px;
-      font-size: 16px;
-    }
-
-    label {
-      display: block;
-      text-align: right;
-      margin-bottom: 8px;
-      font-weight: bold;
-      color: #333;
-    }
-
-    input, select {
-      width: 100%;
-      padding: 12px 15px;
-      margin-bottom: 20px;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      font-size: 16px;
-      box-sizing: border-box;
-      transition: border 0.3s;
-    }
-
-    input:focus, select:focus {
-      border-color: #a1887f;
-      outline: none;
-    }
-
-    input[readonly] {
-      background-color: #f5f5f5;
-      color: #666;
-    }
-
-    button {
-      background-color: #6d4c41;
-      color: white;
-      padding: 12px 25px;
-      border: none;
-      border-radius: 10px;
-      font-size: 18px;
-      cursor: pointer;
+    .nav-buttons a {
+      background: #ffc107; color: #000; padding: 10px 20px;
+      text-decoration: none; font-size: 10px; border-radius: 5px;
       transition: background 0.3s;
     }
+    .nav-buttons a:hover { background: #e0a800; }
+    .separator { margin: 0 5px; font-size: 18px; user-select: none; }
 
-    button:hover {
-      background-color: #5d4037;
+    .filters {
+      display: flex; justify-content: center; gap: 10px;
+      flex-wrap: wrap; margin-bottom: 20px;
     }
+    .filters select, .filters button {
+      padding: 8px 16px; font-size: 10px; cursor: pointer;
+      border:1px solid #ccc; border-radius:5px;
+      transition: background 0.3s; color:#000;
+    }
+    .filters button:hover, .filters select:hover { background: #e0a800; }
 
-    .note {
-      font-size: 14px;
-      color: #888;
-      margin-bottom: 25px;
+    #cards-container { max-width:700px; margin:0 auto; }
+
+    .card {
+      background:#fff; border-radius:15px; box-shadow:0 4px 8px rgba(0,0,0,0.1);
+      padding:20px 20px 100px; margin-bottom:40px; position:relative;
+    }
+    .top-line { display:flex; align-items:center; margin-bottom:10px; }
+    .top-line img {
+      width:50px; height:50px; border-radius:50%; margin-left:10px;
+    }
+    .teacher-name { font-weight:bold; flex:1; }
+    .rating {
+      position:absolute; top:20px; left:20px; font-size:18px; color:gold;
+    }
+    .course-title {
+      font-size:20px; font-weight:bold; color:#007bff; margin-bottom:5px;
+    }
+    .description { font-size:15px; margin-bottom:10px; }
+    .info, .duration { font-size:14px; margin-bottom:6px; }
+    .price { font-size:14px; margin-bottom:4px; }
+    .price .current-price { color:#28a745; font-weight:bold; }
+    .price .old-price {
+      color:red; text-decoration:line-through; margin:0 5px;
+    }
+    .limited { font-size:12px; color:red; margin-bottom:10px; }
+
+    .subscribe-btn {
+      background:#28a745; color:#fff; padding:8px 16px; border:none;
+      border-radius:8px; font-weight:bold; cursor:pointer;
+      position:absolute; bottom:10px; left:20px;
+      transition: background 0.4s;
+    }
+    .subscribe-btn.hide { background:red; }
+
+    .register-form {
+      background:#f1f1f1; border-radius:15px; padding:20px; margin-top:5px;
+      max-height:0; overflow:hidden; opacity:0;
+      transition: max-height 0.6s ease, opacity 0.6s ease;
+    }
+    .register-form.show {
+      max-height:600px; opacity:1;
+    }
+    .register-form h3 { margin-bottom:20px; color:#333; }
+    .form-group { margin-bottom:12px; }
+    .form-group label {
+      display:block; margin-bottom:5px; font-weight:bold;
+    }
+    .form-group input, .form-group select {
+      width:100%; padding:8px; border:1px solid #ccc;
+      border-radius:8px; font-size:14px;
+    }
+    .form-group input[readonly] {
+      background:#ddd; cursor:not-allowed;
+    }
+    .copy-section {
+      display:flex; align-items:center; gap:10px; margin-bottom:12px;
+    }
+    .copy-btn {
+      padding:6px 12px; background:gray; color:white;
+      border:none; border-radius:6px; cursor:pointer;
+    }
+    .bottom-buttons { display:flex; gap:10px; }
+    .send-btn {
+      background:#007bff; color:#fff; padding:8px 16px;
+      border:none; border-radius:8px; cursor:pointer;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>نموذج التسجيل</h1>
-    <p class="description">خبرة 9 سنوات في المناهج السعودية لكل المراحل</p>
-    
-    <form onsubmit="return validateForm()">
-      <label for="grade">الصف</label>
-      <input type="text" id="grade" value="أ. أحمد عبدالرحمن" readonly>
 
-      <label for="name">الاسم</label>
-      <input type="text" id="name" placeholder="ادخل اسم الطالب" required>
+<header>
+  <div class="site-title">كورساتي</div>
+  <div class="nav-buttons">
+    <a href="#">الرئيسية</a><span class="separator">|</span>
+    <a href="#">الدورات</a><span class="separator">|</span>
+    <a href="https://wa.me/966534553706?text=السلام%20عليكم%20أريد%20الاستفسارعن%20الدورات" target="_blank">تواصل معنا</a>
+  </div>
+</header>
 
-      <label for="number">رقم التواصل (واتساب)</label>
-      <input type="tel" id="number" placeholder="أدخل رقم مكون من 10 أرقام" required maxlength="10" pattern="[0-9]{10}">
+<div class="filters">
+  <select id="filter-stage">
+    <option value="">المرحلة</option>
+    <option value="متوسط">متوسط</option>
+    <option value="ثانوي">ثانوي</option>
+  </select>
+  <select id="filter-grade" disabled>
+    <option value="">الصف</option>
+  </select>
+  <select id="filter-rating">
+    <option value="">التقييم</option>
+    <option value="1">⭐</option>
+    <option value="2">⭐⭐</option>
+    <option value="3">⭐⭐⭐</option>
+    <option value="4">⭐⭐⭐⭐</option>
+    <option value="5">⭐⭐⭐⭐⭐</option>
+  </select>
+  <input type="date" id="filter-date" />
+  <button id="reset-filters">إعادة التعيين</button>
+</div>
 
-      <label for="subject">المادة</label>
-      <select id="subject" required>
-        <option value="">اختر المادة</option>
-        <option>اللغة الإنجليزية</option>
-        <option>الرياضيات</option>
-        <option>العلوم</option>
-        <option>الفيزياء</option>
-        <option>الكيمياء</option>
-        <option>الأحياء</option>
-      </select>
-
-      <button type="submit">سجل الآن</button>
-    </form>
+<div id="cards-container">
+  <!-- متوسط: 3 نماذج إنجليزي -->
+  <!-- 1) الصف الأول متوسط - إنجليزي -->
+  <div class="card" data-stage="متوسط" data-grade="الصف الأول متوسط" data-rating="5" data-date="2025-06-01">
+    <div class="rating">⭐⭐⭐⭐⭐</div>
+    <div class="top-line">
+      <img src="https://cdn-icons-png.flaticon.com/512/147/147144.png" alt="teacher"/>
+      <div class="teacher-name">أ. أحمد عبدالرحمن</div>
+    </div>
+    <div class="course-title">الصف الأول متوسط - إنجليزي</div>
+    <div class="description">خبرة 9 سنوات في المناهج السعودية لكل المراحل</div>
+    <div class="info">المرحلة: متوسط</div>
+    <div class="info">الصف: الصف الأول متوسط</div>
+    <div class="info">المادة: إنجليزي</div>
+    <div class="info">تاريخ الدورة: 2025-06-01</div>
+    <div class="duration">المدة: ساعتان</div>
+    <div class="price"><span class="current-price">100 ريال</span> - <span class="old-price">250 ريال</span></div>
+    <div class="limited">باقي عدد محدود من المقاعد - انتهز الفرصة</div>
+    <button class="subscribe-btn" data-form="form-mid-1-eng">سجل الآن</button>
+    <div class="register-form" id="form-mid-1-eng">
+      <h3>تسجيل طالب - الصف الأول متوسط - إنجليزي</h3>
+      <div class="form-group">
+        <label>الصف</label>
+        <input type="text" value="الصف الأول متوسط" readonly />
+      </div>
+      <div class="form-group"><label>اسم الطالب رباعي</label><input type="text" required/></div>
+      <div class="form-group"><label>رقم الواتساب للتواصل</label><input type="text" required/></div>
+      <div class="form-group"><label>انسخ رقم الحساب</label>
+        <div class="copy-section">
+          <span>SA1234567890</span>
+          <button class="copy-btn" onclick="copyAccount(this)">نسخ</button>
+        </div>
+      </div>
+      <div class="form-group"><label>ارفع صورة الإيصال</label><input type="file" required/></div>
+      <div class="bottom-buttons"><button class="send-btn">إرسال</button></div>
+    </div>
   </div>
 
-  <script>
-    function validateForm() {
-      const number = document.getElementById("number").value;
-      if (!/^\d{10}$/.test(number)) {
-        alert("الرجاء إدخال رقم واتساب مكون من 10 أرقام فقط.");
-        return false;
-      }
-      return true;
-    }
-  </script>
+  <!-- 2) الصف الثاني متوسط - إنجليزي -->
+  <div class="card" data-stage="متوسط" data-grade="الصف الثاني متوسط" data-rating="4" data-date="2025-06-02">
+    <div class="rating">⭐⭐⭐⭐</div>
+    <div class="top-line">
+      <img src="https://cdn-icons-png.flaticon.com/512/147/147144.png" alt="teacher"/>
+      <div class="teacher-name">أ. أحمد عبدالرحمن</div>
+    </div>
+    <div class="course-title">الصف الثاني متوسط - إنجليزي</div>
+    <div class="description">خبرة 9 سنوات في المناهج السعودية لكل المراحل</div>
+    <div class="info">المرحلة: متوسط</div>
+    <div class="info">الصف: الصف الثاني متوسط</div>
+    <div class="info">المادة: إنجليزي</div>
+    <div class="info">تاريخ الدورة: 2025-06-02</div>
+    <div class="duration">المدة: ساعتان</div>
+    <div class="price"><span class="current-price">100 ريال</span> - <span class="old-price">250 ريال</span></div>
+    <div class="limited">باقي عدد محدود من المقاعد - انتهز الفرصة</div>
+    <button class="subscribe-btn" data-form="form-mid-2-eng">سجل الآن</button>
+    <div class="register-form" id="form-mid-2-eng">
+      <h3>تسجيل طالب - الصف الثاني متوسط - إنجليزي</h3>
+      <div class="form-group">
+        <label>الصف</label>
+        <input type="text" value="الصف الثاني متوسط" readonly />
+      </div>
+      <div class="form-group"><label>اسم الطالب رباعي</label><input type="text" required/></div>
+      <div class="form-group"><label>رقم الواتساب للتواصل</label><input type="text" required/></div>
+      <div class="form-group"><label>انسخ رقم الحساب</label>
+        <div class="copy-section">
+          <span>SA1234567890</span>
+          <button class="copy-btn" onclick="copyAccount(this)">نسخ</button>
+        </div>
+      </div>
+      <div class="form-group"><label>ارفع صورة الإيصال</label><input type="file" required/></div>
+      <div class="bottom-buttons"><button class="send-btn">إرسال</button></div>
+    </div>
+  </div>
+
+  <!-- 3) الصف الثالث متوسط - إنجليزي -->
+  <div class="card" data-stage="متوسط" data-grade="الصف الثالث متوسط" data-rating="5" data-date="2025-06-03">
+    <div class="rating">⭐⭐⭐⭐⭐</div>
+    <div class="top-line">
+      <img src="https://cdn-icons-png.flaticon.com/512/147/147144.png" alt="teacher"/>
+      <div class="teacher-name">أ. أحمد عبدالرحمن</div>
+    </div>
+    <div class="course-title">الصف الثالث متوسط - إنجليزي</div>
+    <div class="description">خبرة 9 سنوات في المناهج السعودية لكل المراحل</div>
+    <div class="info">المرحلة: متوسط</div>
+    <div class="info">الصف: الصف الثالث متوسط</div>
+    <div class="info">المادة: إنجليزي</div>
+    <div class="info">تاريخ الدورة: 2025-06-03</div>
+    <div class="duration">المدة: ساعتان</div>
+    <div class="price"><span class="current-price">100 ريال</span> - <span class="old-price">250 ريال</span></div>
+    <div class="limited">باقي عدد محدود من المقاعد - انتهز الفرصة</div>
+    <button class="subscribe-btn" data-form="form-mid-3-eng">سجل الآن</button>
+    <div class="register-form" id="form-mid-3-eng">
+      <h3>تسجيل طالب - الصف الثالث متوسط - إنجليزي</h3>
+      <div class="form-group">
+        <label>الصف</label>
+        <input type="text" value="الصف الثالث متوسط" readonly />
+      </div>
+      <div class="form-group"><label>اسم الطالب رباعي</label><input type="text" required/></div>
+      <div class="form-group"><label>رقم الواتساب للتواصل</label><input type="text" required/></div>
+      <div class="form-group"><label>انسخ رقم الحساب</label>
+        <div class="copy-section">
+          <span>SA1234567890</span>
+          <button class="copy-btn" onclick="copyAccount(this)">نسخ</button>
+        </div>
+      </div>
+      <div class="form-group"><label>ارفع صورة الإيصال</label><input type="file" required/></div>
+      <div class="bottom-buttons"><button class="send-btn">إرسال</button></div>
+    </div>
+  </div>
+
+  <!-- ثانوي: 3 نماذج إنجليزي -->
+  <!-- 4) الصف الأول ثانوي -->
+  <div class="card" data-stage="ثانوي" data-grade="الصف الأول ثانوي" data-rating="4" data-date="2025-06-04">
+    <div class="rating">⭐⭐⭐⭐</div>
+    <div class="top-line">
+      <img src="https://cdn-icons-png.flaticon.com/512/147/147144.png" alt="teacher"/>
+      <div class="teacher-name">أ. أحمد عبدالرحمن</div>
+    </div>
+    <div class="course-title">الصف الأول ثانوي - إنجليزي</div>
+    <div class="description">خبرة 9 سنوات في المناهج السعودية لكل المراحل</div>
+    <div class="info">المرحلة: ثانوي</div>
+    <div class="info">الصف: الصف الأول ثانوي</div>
+    <div class="info">المادة: إنجليزي</div>
+    <div class="info">تاريخ الدورة: 2025-06-04</div>
+    <div class="duration">المدة: ساعتان</div>
+    <div class="price"><span class="current-price">100 ريال</span> - <span class="old-price">250 ريال</span></div>
+    <div class="limited">باقي عدد محدود من المقاعد - انتهز الفرصة</div>
+    <button class="subscribe-btn" data-form="form-high-1-eng">سجل الآن</button>
+    <div class="register-form" id="form-high-1-eng">
+      <h3>تسجيل طالب - الصف الأول ثانوي - إنجليزي</h3>
+      <div class="form-group">
+        <label>الصف</label>
+        <input type="text" value="الصف الأول ثانوي" readonly />
+      </div>
+      <div class="form-group"><label>اسم الطالب رباعي</label><input type="text" required/></div>
+      <div class="form-group"><label>رقم الواتساب للتواصل</label><input type="text" required/></div>
+      <div class="form-group"><label>انسخ رقم الحساب</label>
+        <div class="copy-section">
+          <span>SA1234567890</span>
+          <button class="copy-btn" onclick="copyAccount(this)">نسخ</button>
+        </div>
+      </div>
+      <div class="form-group"><label>ارفع صورة الإيصال</label><input type="file" required/></div>
+      <div class="bottom-buttons"><button class="send-btn">إرسال</button></div>
+    </div>
+  </div>
+  <!-- 5) الصف الثاني ثانوي -->
+  <div class="card" data-stage="ثانوي" data-grade="الصف الثاني ثانوي" data-rating="5" data-date="2025-06-05">
+    <div class="rating">⭐⭐⭐⭐⭐</div>
+    <div class="top-line">
+      <img src="https://cdn-icons-png.flaticon.com/512/147/147144.png" alt="teacher"/>
+      <div class="teacher-name">أ. أحمد عبدالرحمن</div>
+    </div>
+    <div class="course-title">الصف الثاني ثانوي - إنجليزي</div>
+    <div class="description">خبرة 9 سنوات في المناهج السعودية لكل المراحل</div>
+    <div class="info">المرحلة: ثانوي</div>
+    <div class="info">الصف: الصف الثاني ثانوي</div>
+    <div class="info">المادة: إنجليزي</div>
+    <div class="info">تاريخ الدورة: 2025-06-05</div>
+    <div class="duration">المدة: ساعتان</div>
+    <div class="price"><span class="current-price">100 ريال</span> - <span class="old-price">250 ريال</span></div>
+    <div class="limited">باقي عدد محدود من المقاعد - انتهز الفرصة</div>
+    <button class="subscribe-btn" data-form="form-high-2-eng">سجل الآن</button>
+    <div class="register-form" id="form-high-2-eng">
+      <h3>تسجيل طالب - الصف الثاني ثانوي - إنجليزي</h3>
+      <div class="form-group">
+        <label>الصف</label>
+        <input type="text" value="الصف الثاني ثانوي" readonly />
+      </div>
+      <div class="form-group"><label>اسم الطالب رباعي</label><input type="text" required/></div>
+      <div class="form-group"><label>رقم الواتساب للتواصل</label><input type="text" required/></div>
+      <div class="form-group"><label>انسخ رقم الحساب</label>
+        <div class="copy-section">
+          <span>SA1234567890</span>
+          <button class="copy-btn" onclick="copyAccount(this)">نسخ</button>
+        </div>
+      </div>
+      <div class="form-group"><label>ارفع صورة الإيصال</label><input type="file" required/></div>
+      <div class="bottom-buttons"><button class="send-btn">إرسال</button></div>
+    </div>
+  </div>
+  <!-- 6) الصف الثالث ثانوي -->
+  <div class="card" data-stage="ثانوي" data-grade="الصف الثالث ثانوي" data-rating="4" data-date="2025-06-06">
+    <div class="rating">⭐⭐⭐⭐</div>
+    <div class="top-line">
+      <img src="https://cdn-icons-png.flaticon.com/512/147/147144.png" alt="teacher"/>
+      <div class="teacher-name">أ. أحمد عبدالرحمن</div>
+    </div>
+    <div class="course-title">الصف الثالث ثانوي - إنجليزي</div>
+    <div class="description">خبرة 9 سنوات في المناهج السعودية لكل المراحل</div>
+    <div class="info">المرحلة: ثانوي</div>
+    <div class="info">الصف: الصف الثالث ثانوي</div>
+    <div class="info">المادة: إنجليزي</div>
+    <div class="info">تاريخ الدورة: 2025-06-06</div>
+    <div class="duration">المدة: ساعتان</div>
+    <div class="price"><span class="current-price">100 ريال</span> - <span class="old-price">250 ريال</span></div>
+    <div class="limited">باقي عدد محدود من المقاعد - انتهز الفرصة</div>
+    <button class="subscribe-btn" data-form="form-high-3-eng">سجل الآن</button>
+    <div class="register-form" id="form-high-3-eng">
+      <h3>تسجيل طالب - الصف الثالث ثانوي - إنجليزي</h3>
+      <div class="form-group">
+        <label>الصف</label>
+        <input type="text" value="الصف الثالث ثانوي" readonly />
+      </div>
+      <div class="form-group"><label>اسم الطالب رباعي</label><input type="text" required/></div>
+      <div class="form-group"><label>رقم الواتساب للتواصل</label><input type="text" required/></div>
+      <div class="form-group"><label>انسخ رقم الحساب</label>
+        <div class="copy-section">
+          <span>SA1234567890</span>
+          <button class="copy-btn" onclick="copyAccount(this)">نسخ</button>
+        </div>
+      </div>
+      <div class="form-group"><label>ارفع صورة الإيصال</label><input type="file" required/></div>
+      <div class="bottom-buttons"><button class="send-btn">إرسال</button></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const stageFilter = document.getElementById('filter-stage');
+  const gradeFilter = document.getElementById('filter-grade');
+  const ratingFilter = document.getElementById('filter-rating');
+  const dateFilter = document.getElementById('filter-date');
+  const resetBtn = document.getElementById('reset-filters');
+  const cardsContainer = document.getElementById('cards-container');
+
+  function setGradeOptions(stage) {
+    gradeFilter.innerHTML = '<option value="">الصف</option>';
+    gradeFilter.disabled = !stage;
+    if (!stage) return;
+    const list = (stage === 'متوسط')
+      ? ['الصف الأول متوسط','الصف الثاني متوسط','الصف الثالث متوسط']
+      : ['الصف الأول ثانوي','الصف الثاني ثانوي','الصف الثالث ثانوي'];
+    list.forEach(g => {
+      const o = document.createElement('option');
+      o.value = g; o.textContent = g;
+      gradeFilter.appendChild(o);
+    });
+  }
+
+  stageFilter.addEventListener('change', () => {
+    setGradeOptions(stageFilter.value);
+    filterCards();
+  });
+  [gradeFilter, ratingFilter, dateFilter].forEach(el =>
+    el.addEventListener('change', filterCards)
+  );
+  resetBtn.addEventListener('click', () => {
+    stageFilter.value = '';
+    gradeFilter.innerHTML = '<option value="">الصف</option>';
+    gradeFilter.disabled = true;
+    ratingFilter.value = '';
+    dateFilter.value = '';
+    filterCards();
+  });
+
+  function filterCards() {
+    const s = stageFilter.value, g = gradeFilter.value,
+          r = ratingFilter.value, d = dateFilter.value;
+    cardsContainer.querySelectorAll('.card').forEach(card => {
+      const ok = (!s || card.dataset.stage === s)
+              && (!g || card.dataset.grade === g)
+              && (!r || card.dataset.rating === r)
+              && (!d || card.dataset.date === d);
+      card.style.display = ok ? 'block' : 'none';
+    });
+  }
+
+  document.querySelectorAll('.subscribe-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const form = document.getElementById(btn.dataset.form);
+      const show = form.classList.toggle('show');
+      btn.textContent = show ? 'إخفاء' : 'سجل الآن';
+      btn.classList.toggle('hide', show);
+    });
+  });
+
+  function copyAccount(btn) {
+    const txt = btn.previousElementSibling.textContent;
+    navigator.clipboard.writeText(txt).then(() => {
+      btn.textContent = 'تم النسخ';
+      setTimeout(() => btn.textContent = 'نسخ', 1500);
+    });
+  }
+
+  gradeFilter.disabled = true;
+  filterCards();
+</script>
+
 </body>
 </html>
