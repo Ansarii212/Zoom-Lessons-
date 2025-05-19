@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -12,220 +12,118 @@
     padding: 20px;
     color: #555;
   }
-      .site-title {
-  font-size: 30px;
-  font-weight: bold;
-  text-align: center;
-  display: block;
-  margin: 0 auto;
-}
-
-    .nav-buttons {
-      
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    
-    }
-
-    .nav-buttons a {
-      background-color: #ffc107;
-      color: #000;
-      padding: 10px 20px;
-      margin: 10px 10px;
-      border: none;
-      text-decoration: none;
-      font-size: 10px;
-      border-radius: 5px;
-      transition: background-color 0.3s ease;
-    }
-
-    .nav-buttons a:hover {
-      background-color: #e0a800;
-    }
-
-    .separator {
-      color: black;
-      font-size: 18px;
-      margin: 0 5px;
-      user-select: none;
-    }
-
-.filters {
-  display: flex;
-  justify-content: center; /* علشان تكون في المنتصف */
-  gap: 10px;               /* مسافات بين الأزرار */
-  flex-wrap: wrap;         /* تخليها تلف لو الشاشة ضيقة */
-  margin: 20px 0;
-}
-
-.filters button {
-  padding: 8px 16px;
-  border: none;
-  border-radius: 5px;
-  colore: black ;
-  font-size: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.filters button:hover {
-  background-color: #e0a800;
-}
-  #cards-container {
-    max-width: 700px;
-    margin: 0 auto;
+  .site-title {
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
   }
-  .card {
-    background: #fff;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    padding: 20px 20px 60px 20px;
-    margin-bottom: 40px;
-    position: relative;
-  }
-  .top-line {
+  .nav-buttons {
     display: flex;
+    justify-content: center;
     align-items: center;
-    margin-bottom: 10px;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
   }
-  .top-line img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-left: 10px;
+  .nav-buttons a {
+    background-color: #ffc107;
+    color: #000;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
   }
-  .teacher-name {
-    font-weight: bold;
-    flex: 1;
+  .nav-buttons a:hover { background-color: #e0a800; }
+  .separator { margin: 0 5px; font-size: 18px; user-select: none; }
+
+  .filters {
+    display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;
   }
-  .rating {
-    font-size: 18px;
-    color: gold;
-    position: absolute;
-    left: 20px;
-    top: 20px;
-    user-select: none;
+  .filters select, .filters input, .filters button {
+    padding: 8px 16px; font-size: 10px; cursor: pointer; border-radius: 5px; border:1px solid #ccc;
+    transition: background-color 0.3s ease; color: #000;
   }
-  .course-title {
-    font-size: 20px;
-    font-weight: bold;
-    color: #007bff;
-    margin-bottom: 5px;
+  .filters button:hover, .filters select:hover { background-color: #e0a800; }
+
+  #cards-container { max-width: 700px; margin: 0 auto; }
+  .card {
+    background: #fff; border-radius:15px; box-shadow:0 4px 8px rgba(0,0,0,0.1);
+    padding:20px 20px 100px 20px; margin-bottom:40px; position:relative;
   }
-  .description {
-    font-size: 15px;
-    margin-bottom: 10px;
-  }
-  .info {
-    margin-bottom: 6px;
-    font-size: 14px;
-  }
-  .duration {
-    margin-bottom: 10px;
-  }
+  .top-line { display:flex; align-items:center; margin-bottom:10px; }
+  .top-line img { width:50px; height:50px; border-radius:50%; margin-left:10px; }
+  .teacher-name { font-weight:bold; flex:1; }
+  .rating { position:absolute; top:20px; left:20px; font-size:18px; color:gold; }
+  .course-title { font-size:20px; font-weight:bold; color:#007bff; margin-bottom:5px; }
+  .description { font-size:15px; margin-bottom:10px; }
+  .info { font-size:14px; margin-bottom:6px; }
+  .duration { font-size:14px; margin-bottom:6px; }
+
+  .price { font-size:14px; margin-bottom:4px; }
+  .price .current-price { color:#28a745; font-weight:bold; }
+  .price .old-price { color:red; text-decoration:line-through; margin:0 5px; }
+
+  .limited { font-size:12px; color:red; margin-bottom:10px; }
+
   .subscribe-btn {
-    background: #28a745;
+    background: #28a745; /* أخضر */
     color: white;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
+    padding:8px 16px;
+    border:none;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+    position:absolute;
+    bottom:10px; /* خفض المسافة أسفل */
+    left:20px;
     transition: background-color 0.4s ease;
   }
   .subscribe-btn.hide {
-    background-color: #d9534f;
+    background: red; /* أحمر */
   }
+
   .register-form {
-    background: #f1f1f1;
-    border-radius: 15px;
-    padding: 20px;
-    margin-top: 20px;
-    display: none;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
+    background:#f1f1f1; border-radius:15px; padding:20px; margin-top:5px;
+    max-height:0; overflow:hidden; opacity:0;
+    transition: max-height 0.6s ease, opacity 0.6s ease;
   }
   .register-form.show {
-    display: block;
-    opacity: 1;
-    transform: translateY(0);
+    max-height:600px; opacity:1;
   }
-  .register-form h3 {
-    text-align: right;
-    margin-bottom: 20px;
-    color: #333;
-  }
-  .form-group {
-    margin-bottom: 12px;
-  }
-  .form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
+
+  .register-form h3 { margin-bottom:20px; color:#333; }
+  .form-group { margin-bottom:12px; }
+  .form-group label { display:block; margin-bottom:5px; font-weight:bold; }
   .form-group input, .form-group select {
-    width: 100%;
-    padding: 8px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 14px;
+    width:100%; padding:8px; border-radius:8px; border:1px solid #ccc; font-size:14px;
   }
-  .form-group input[readonly] {
-    background-color: #ddd;
-    cursor: not-allowed;
-  }
-  .copy-section {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 12px;
-  }
+  .form-group input[readonly] { background:#ddd; cursor:not-allowed; }
+  .copy-section { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
   .copy-btn {
-    padding: 6px 12px;
-    background: gray;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
+    padding:6px 12px; background:gray; color:white; border:none; border-radius:6px; cursor:pointer;
   }
-  .bottom-buttons {
-    margin-top: 15px;
-    display: flex;
-    justify-content: flex-start;
-    gap: 10px;
-  }
-  .bottom-buttons button {
-    padding: 8px 16px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-  .send-btn {
-    background-color: #007bff;
-    color: white;
-  }
+  .bottom-buttons { display:flex; gap:10px; }
+  .bottom-buttons button { padding:8px 16px; border:none; border-radius:8px; cursor:pointer; }
+  .send-btn { background-color:#007bff; color:white; }
 </style>
 </head>
 <body>
-    <header>
-    <div class="site-title">كورساتي</div>
-    <div class="nav-buttons">
-      <a href="#">الرئيسية</a>
-      <span class="separator">|</span>
-      <a href="#">الدورات</a>
-      <span class="separator">|</span>
-      <a href="#">اتصل بنا</a>
-    </div>
-      
-      
-  </header>
+
+<header>
+  <div class="site-title">كورساتي</div>
+  <div class="nav-buttons">
+    <a href="#">الرئيسية</a>
+    <span class="separator">|</span>
+    <a href="#">الدورات</a>
+    <span class="separator">|</span>
+    <a href="https://wa.me/966534553706?text=السلام%20عليكم%20أريد%20الاستفسارعن%20الدورات%20.." target="_blank">
+      تواصل معنا
+    </a>
+  </div>
+</header>
+
 <div class="filters">
   <select id="filter-stage">
     <option value="">المرحلة</option>
@@ -233,30 +131,37 @@
     <option value="متوسط">متوسط</option>
     <option value="ثانوي">ثانوي</option>
   </select>
-
-  <select id="filter-grade" disabled>
-    <option value="">الصف</option>
-  </select>
-
+  <select id="filter-grade" disabled><option value="">الصف</option></select>
   <select id="filter-teacher">
     <option value="">المعلم</option>
     <option value="أ. محمد">أ. محمد</option>
     <option value="أ. سارة">أ. سارة</option>
     <option value="أ. أحمد">أ. أحمد</option>
   </select>
-  
+  <select id="filter-rating">
+    <option value="">التقييم</option>
+    <option value="1">⭐</option>
+    <option value="2">⭐⭐</option>
+    <option value="3">⭐⭐⭐</option>
+    <option value="4">⭐⭐⭐⭐</option>
+    <option value="5">⭐⭐⭐⭐⭐</option>
+  </select>
   <input type="date" id="filter-date" />
-
   <button id="reset-filters">إعادة التعيين</button>
 </div>
 
 <div id="cards-container">
 
   <!-- بطاقة دورة 1 -->
-  <div class="card" data-stage="متوسط" data-grade="الصف الأول" data-teacher="أ. محمد" data-date="2025-05-20">
+  <div class="card"
+       data-stage="متوسط"
+       data-grade="الصف الأول"
+       data-teacher="أ. محمد"
+       data-date="2025-05-20"
+       data-rating="4">
     <div class="rating">⭐⭐⭐⭐</div>
     <div class="top-line">
-      <img src="https://cdn-icons-png.flaticon.com/512/147/147144.png" alt="teacher" />
+      <img src="https://cdn-icons-png.flaticon.com/512/147/147144.png" alt="teacher"/>
       <div class="teacher-name">أ. محمد</div>
     </div>
     <div class="course-title">كورس القواعد</div>
@@ -265,26 +170,19 @@
     <div class="info">الصف: الصف الأول</div>
     <div class="info">تاريخ الدورة: 2025-05-20</div>
     <div class="duration">المدة: 2 ساعة</div>
-    <button class="subscribe-btn" data-form="form1">اشترك الآن</button>
+    <div class="price">
+      <span class="current-price">100 ريال</span> - 
+      <span class="old-price">250 ريال</span>
+    </div>
+    <div class="limited">باقي عدد محدود من المقاعد - انتهز الفرصة</div>
+    <button class="subscribe-btn" data-form="form1">سجل الآن</button>
 
     <div class="register-form" id="form1">
       <h3>تسجيل طالب - كورس القواعد</h3>
-      <div class="form-group">
-        <label>المرحلة</label>
-        <input type="text" value="متوسط" readonly />
-      </div>
-      <div class="form-group">
-        <label>الصف</label>
-        <input type="text" value="الصف الأول" readonly />
-      </div>
-      <div class="form-group">
-        <label>اسم الطالب رباعي</label>
-        <input type="text" />
-      </div>
-      <div class="form-group">
-        <label>رقم الواتساب للتواصل</label>
-        <input type="text" />
-      </div>
+      <div class="form-group"><label>المرحلة</label><input type="text" value="متوسط" readonly/></div>
+      <div class="form-group"><label>الصف</label><input type="text" value="الصف الأول" readonly/></div>
+      <div class="form-group"><label>اسم الطالب رباعي</label><input type="text"/></div>
+      <div class="form-group"><label>رقم الواتساب للتواصل</label><input type="text"/></div>
       <div class="form-group">
         <label>انسخ رقم الحساب</label>
         <div class="copy-section">
@@ -292,21 +190,21 @@
           <button class="copy-btn" onclick="copyAccount(this)">نسخ</button>
         </div>
       </div>
-      <div class="form-group">
-        <label>ارفع صورة الإيصال</label>
-        <input type="file" />
-      </div>
-      <div class="bottom-buttons">
-        <button class="send-btn">إرسال</button>
-      </div>
+      <div class="form-group"><label>ارفع صورة الإيصال</label><input type="file"/></div>
+      <div class="bottom-buttons"><button class="send-btn">إرسال</button></div>
     </div>
   </div>
 
   <!-- بطاقة دورة 2 -->
-  <div class="card" data-stage="ابتدائي" data-grade="الصف الثالث" data-teacher="أ. سارة" data-date="2025-05-22">
+  <div class="card"
+       data-stage="ابتدائي"
+       data-grade="الصف الثالث"
+       data-teacher="أ. سارة"
+       data-date="2025-05-22"
+       data-rating="5">
     <div class="rating">⭐⭐⭐⭐⭐</div>
     <div class="top-line">
-      <img src="https://cdn-icons-png.flaticon.com/512/194/194938.png" alt="teacher" />
+      <img src="https://cdn-icons-png.flaticon.com/512/194/194938.png" alt="teacher"/>
       <div class="teacher-name">أ. سارة</div>
     </div>
     <div class="course-title">كورس الرياضيات</div>
@@ -315,26 +213,19 @@
     <div class="info">الصف: الصف الثالث</div>
     <div class="info">تاريخ الدورة: 2025-05-22</div>
     <div class="duration">المدة: 3 ساعات</div>
-    <button class="subscribe-btn" data-form="form2">اشترك الآن</button>
+    <div class="price">
+      <span class="current-price">100 ريال</span> - 
+      <span class="old-price">250 ريال</span>
+    </div>
+    <div class="limited">باقي عدد محدود من المقاعد - انتهز الفرصة</div>
+    <button class="subscribe-btn" data-form="form2">سجل الآن</button>
 
     <div class="register-form" id="form2">
       <h3>تسجيل طالب - كورس الرياضيات</h3>
-      <div class="form-group">
-        <label>المرحلة</label>
-        <input type="text" value="ابتدائي" readonly />
-      </div>
-      <div class="form-group">
-        <label>الصف</label>
-        <input type="text" value="الصف الثالث" readonly />
-      </div>
-      <div class="form-group">
-        <label>اسم الطالب رباعي</label>
-        <input type="text" />
-      </div>
-      <div class="form-group">
-        <label>رقم الواتساب للتواصل</label>
-        <input type="text" />
-      </div>
+      <div class="form-group"><label>المرحلة</label><input type="text" value="ابتدائي" readonly/></div>
+      <div class="form-group"><label>الصف</label><input type="text" value="الصف الثالث" readonly/></div>
+      <div class="form-group"><label>اسم الطالب رباعي</label><input type="text"/></div>
+      <div class="form-group"><label>رقم الواتساب للتواصل</label><input type="text"/></div>
       <div class="form-group">
         <label>انسخ رقم الحساب</label>
         <div class="copy-section">
@@ -342,21 +233,21 @@
           <button class="copy-btn" onclick="copyAccount(this)">نسخ</button>
         </div>
       </div>
-      <div class="form-group">
-        <label>ارفع صورة الإيصال</label>
-        <input type="file" />
-      </div>
-      <div class="bottom-buttons">
-        <button class="send-btn">إرسال</button>
-      </div>
+      <div class="form-group"><label>ارفع صورة الإيصال</label><input type="file"/></div>
+      <div class="bottom-buttons"><button class="send-btn">إرسال</button></div>
     </div>
   </div>
 
   <!-- بطاقة دورة 3 -->
-  <div class="card" data-stage="ثانوي" data-grade="الصف الثالث" data-teacher="أ. أحمد" data-date="2025-06-10">
+  <div class="card"
+       data-stage="ثانوي"
+       data-grade="الصف الثالث"
+       data-teacher="أ. أحمد"
+       data-date="2025-06-10"
+       data-rating="4">
     <div class="rating">⭐⭐⭐⭐</div>
     <div class="top-line">
-      <img src="https://cdn-icons-png.flaticon.com/512/147/147144.png" alt="teacher" />
+      <img src="https://cdn-icons-png.flaticon.com/512/147/147144.png" alt="teacher"/>
       <div class="teacher-name">أ. أحمد</div>
     </div>
     <div class="course-title">كورس الفيزياء</div>
@@ -365,26 +256,19 @@
     <div class="info">الصف: الصف الثالث</div>
     <div class="info">تاريخ الدورة: 2025-06-10</div>
     <div class="duration">المدة: 4 ساعات</div>
-    <button class="subscribe-btn" data-form="form3">اشترك الآن</button>
+    <div class="price">
+      <span class="current-price">100 ريال</span> - 
+      <span class="old-price">250 ريال</span>
+    </div>
+    <div class="limited">باقي عدد محدود من المقاعد - انتهز الفرصة</div>
+    <button class="subscribe-btn" data-form="form3">سجل الآن</button>
 
     <div class="register-form" id="form3">
       <h3>تسجيل طالب - كورس الفيزياء</h3>
-      <div class="form-group">
-        <label>المرحلة</label>
-        <input type="text" value="ثانوي" readonly />
-      </div>
-      <div class="form-group">
-        <label>الصف</label>
-        <input type="text" value="الصف الثالث" readonly />
-      </div>
-      <div class="form-group">
-        <label>اسم الطالب رباعي</label>
-        <input type="text" />
-      </div>
-      <div class="form-group">
-        <label>رقم الواتساب للتواصل</label>
-        <input type="text" />
-      </div>
+      <div class="form-group"><label>المرحلة</label><input type="text" value="ثانوي" readonly/></div>
+      <div class="form-group"><label>الصف</label><input type="text" value="الصف الثالث" readonly/></div>
+      <div class="form-group"><label>اسم الطالب رباعي</label><input type="text"/></div>
+      <div class="form-group"><label>رقم الواتساب للتواصل</label><input type="text"/></div>
       <div class="form-group">
         <label>انسخ رقم الحساب</label>
         <div class="copy-section">
@@ -392,22 +276,19 @@
           <button class="copy-btn" onclick="copyAccount(this)">نسخ</button>
         </div>
       </div>
-      <div class="form-group">
-        <label>ارفع صورة الإيصال</label>
-        <input type="file" />
-      </div>
-      <div class="bottom-buttons">
-        <button class="send-btn">إرسال</button>
-      </div>
+      <div class="form-group"><label>ارفع صورة الإيصال</label><input type="file"/></div>
+      <div class="bottom-buttons"><button class="send-btn">إرسال</button></div>
     </div>
   </div>
+
 </div>
 
 <script>
-  // تحديث خيارات الصف حسب المرحلة
+  // تحديث الصفوف حسب المرحلة
   const stageFilter = document.getElementById('filter-stage');
   const gradeFilter = document.getElementById('filter-grade');
   const teacherFilter = document.getElementById('filter-teacher');
+  const ratingFilter = document.getElementById('filter-rating');
   const dateFilter = document.getElementById('filter-date');
   const resetBtn = document.getElementById('reset-filters');
   const cardsContainer = document.getElementById('cards-container');
@@ -417,91 +298,62 @@
     gradeFilter.innerHTML = '<option value="">الصف</option>';
     gradeFilter.disabled = !stage;
     if (!stage) return;
-    let grades = [];
-    if(stage === 'ابتدائي'){
-      grades = ['الصف الأول', 'الصف الثاني', 'الصف الثالث', 'الصف الرابع', 'الصف الخامس', 'الصف السادس'];
-    } else if(stage === 'متوسط' || stage === 'ثانوي'){
-      grades = ['الصف الأول', 'الصف الثاني', 'الصف الثالث'];
-    }
-    grades.forEach(g => {
-      let opt = document.createElement('option');
-      opt.value = g;
-      opt.textContent = g;
-      gradeFilter.appendChild(opt);
+    const grades = stage==='ابتدائي'
+      ? ['الصف الأول','الصف الثاني','الصف الثالث','الصف الرابع','الصف الخامس','الصف السادس']
+      : ['الصف الأول','الصف الثاني','الصف الثالث'];
+    grades.forEach(g=>{
+      const o = document.createElement('option');
+      o.value=g; o.textContent=g;
+      gradeFilter.appendChild(o);
     });
   }
 
-  stageFilter.addEventListener('change', () => {
+  stageFilter.addEventListener('change', ()=>{
     setGradeOptions(stageFilter.value);
     filterCards();
   });
-
-  gradeFilter.addEventListener('change', filterCards);
-  teacherFilter.addEventListener('change', filterCards);
-  dateFilter.addEventListener('change', filterCards);
-  resetBtn.addEventListener('click', () => {
-    stageFilter.value = '';
-    gradeFilter.innerHTML = '<option value="">الصف</option>';
-    gradeFilter.disabled = true;
-    teacherFilter.value = '';
-    dateFilter.value = '';
+  [gradeFilter, teacherFilter, ratingFilter, dateFilter].forEach(el=> el.addEventListener('change', filterCards));
+  resetBtn.addEventListener('click', ()=>{
+    stageFilter.value=''; gradeFilter.innerHTML='<option value="">الصف</option>'; gradeFilter.disabled=true;
+    teacherFilter.value=''; ratingFilter.value=''; dateFilter.value='';
     filterCards();
   });
 
   function filterCards() {
-    const stage = stageFilter.value;
-    const grade = gradeFilter.value;
-    const teacher = teacherFilter.value;
-    const date = dateFilter.value;
-    const cards = cardsContainer.querySelectorAll('.card');
-    cards.forEach(card => {
-      let show = true;
-      if(stage && card.dataset.stage !== stage) show = false;
-      if(grade && card.dataset.grade !== grade) show = false;
-      if(teacher && card.dataset.teacher !== teacher) show = false;
-      if(date && card.dataset.date !== date) show = false;
-      card.style.display = show ? 'block' : 'none';
+    const s = stageFilter.value, g = gradeFilter.value, t = teacherFilter.value;
+    const r = ratingFilter.value, d = dateFilter.value;
+    cardsContainer.querySelectorAll('.card').forEach(card=>{
+      const ok = (!s||card.dataset.stage===s)
+              &&(!g||card.dataset.grade===g)
+              &&(!t||card.dataset.teacher===t)
+              &&(!r||card.dataset.rating===r)
+              &&(!d||card.dataset.date===d);
+      card.style.display = ok ? 'block' : 'none';
     });
   }
 
-  // زر الاشتراك - إظهار النموذج مع أنيميشن ونقل الصفحة إليه
-  subscribeButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const formId = btn.dataset.form;
-      const form = document.getElementById(formId);
-      if(form.classList.contains('show')) {
-        // إخفاء النموذج وإعادة الزر
-        form.classList.remove('show');
-        btn.textContent = 'اشترك الآن';
-        btn.classList.remove('hide');
-      } else {
-        // إخفاء كل النماذج الأخرى أولاً
-        document.querySelectorAll('.register-form.show').forEach(f => f.classList.remove('show'));
-        // إعادة كل الأزرار لنص الاشتراك
-        subscribeButtons.forEach(b => {
-          b.textContent = 'اشترك الآن';
-          b.classList.remove('hide');
-        });
-
-        form.classList.add('show');
-        btn.textContent = 'إخفاء';
-        btn.classList.add('hide');
-
-        // نزول الصفحة بسلاسة لنموذج التسجيل
-        form.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
+  // زر التسجيل وإخفاء/إظهار النموذج
+  subscribeButtons.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const form = document.getElementById(btn.dataset.form);
+      const showing = form.classList.toggle('show');
+      btn.textContent = showing ? 'إخفاء' : 'سجل الآن';
+      btn.classList.toggle('hide', showing);
     });
   });
 
   // نسخ رقم الحساب
   function copyAccount(btn){
-    const text = btn.previousElementSibling.textContent;
-    navigator.clipboard.writeText(text).then(() => {
-      btn.textContent = 'تم النسخ';
-      setTimeout(() => btn.textContent = 'نسخ', 1500);
+    const txt = btn.previousElementSibling.textContent;
+    navigator.clipboard.writeText(txt).then(()=>{
+      btn.textContent='تم النسخ';
+      setTimeout(()=>btn.textContent='نسخ',1500);
     });
   }
 
+  // تهيئة البدء
+  gradeFilter.disabled = true;
+  filterCards();
 </script>
 
 </body>
